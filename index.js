@@ -16,6 +16,10 @@ const handleSubscribeMessage = (client, topic) => {
 
     // when client closes connection, remove it from the topic
     client.on('close', () => {
+        if (!topicsClients[topic]) {
+            return;
+        }
+
         topicsClients[topic] = topicsClients[topic].filter(c => c !== client);
 
         // delete the topic if it was the last client connected
