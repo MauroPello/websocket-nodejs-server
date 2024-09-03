@@ -26,10 +26,15 @@ const handleSubscribeMessage = (client, topic) => {
 }
 
 const handlePublishMessage = (payload, topic) => {
-    console.log(`[PUBLISH]\t [TOPIC: ${topic}]\t payload:`, payload);
+    console.log(`[PUBLISH]\t [TOPIC: ${topic}]\t payload:`, JSON.stringify(payload));
+
+    const message = JSON.stringify({
+        topic,
+        payload
+    });
 
     // send message to all clients subscribed to the topic
-    topicsClients[topic]?.filter(client => client.readyState === WebSocket.OPEN).forEach(client => client.send(payload));
+    topicsClients[topic]?.filter(client => client.readyState === WebSocket.OPEN).forEach(client => client.send(message));
 }
 
 server.on('connection', (client) => {
@@ -42,7 +47,7 @@ server.on('connection', (client) => {
                 handleSubscribeMessage(client, topic);
                 break;
             case 'publish':
-                handlePublishMessage(JSON.stringify(message.payload), topic);
+                handlePublishMessage(message.payload, topic);
                 break;
             default:
                 console.log('Unknown message type');
