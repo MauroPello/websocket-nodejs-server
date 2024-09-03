@@ -2,12 +2,12 @@ import { WebSocketServer } from 'ws';
 
 // node index.js
 
-const wss = new WebSocketServer({ port: 8080 });
+const server = new WebSocketServer({ port: 20000 });
 
-wss.on('connection', (ws) => {
-    console('Client connected');
+server.on('connection', (client) => {
+    console.log('Client connected');
 
-    ws.on('message', (data) => {
+    client.on('message', (data) => {
         console.log(data);
     });
 });
