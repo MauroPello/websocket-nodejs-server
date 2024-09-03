@@ -12,7 +12,9 @@ const handleSubscribeMessage = (client, topic) => {
     }
 
     // add client to topic
-    topicsClients[topic].push(client);
+    if (!topicsClients[topic].includes(client)) {
+        topicsClients[topic].push(client);
+    }
 
     // when client closes connection, remove it from the topic
     client.on('close', () => {
