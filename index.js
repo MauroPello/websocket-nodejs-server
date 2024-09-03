@@ -29,7 +29,7 @@ const handlePublishMessage = (payload, topic) => {
     console.log(`[PUBLISH]\t [TOPIC: ${topic}]\t payload:`, payload);
 
     // send message to all clients subscribed to the topic
-    topicsClients[topic]?.filter(client => client.readyState !== WebSocket.OPEN).forEach(client => client.send(payload));
+    topicsClients[topic]?.filter(client => client.readyState === WebSocket.OPEN).forEach(client => client.send(payload));
 }
 
 server.on('connection', (client) => {
