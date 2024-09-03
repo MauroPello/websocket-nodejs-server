@@ -42,7 +42,7 @@ server.on('connection', (client) => {
                 handleSubscribeMessage(client, topic);
                 break;
             case 'publish':
-                handlePublishMessage(JSON.stringify(message.payload).trim(), topic);
+                handlePublishMessage(JSON.stringify(message.payload), topic);
                 break;
             default:
                 console.log('Unknown message type');
